@@ -3,6 +3,8 @@
 # RoboND-simple_arm
 A mini-project to better explain pub-sub architecture in ROS
 
+Originally clone of the branch *first_interaction* from [this](https://github.com/udacity/RoboND-simple_arm.git) repository.
+
 ## How to Launch the simulation?
 
 #### Create a catkin_ws, feel free to skip if you already have one!
