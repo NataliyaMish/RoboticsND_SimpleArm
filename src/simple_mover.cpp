@@ -1,19 +1,41 @@
 #include "ros/ros.h"
 #include "std_msgs/Float64.h"
 
+class JointAnglesPublisher
+{
+  public:
+
+  JointAnglesPublisher()
+  {
+    // Create a publisher that can publish a std_msgs::Float64 message on the /simple_arm/joint_1_position_controller/command topic
+    ros::Publisher mJoint1Pub = mNode.advertise<std_msgs::Float64>("/simple_arm/joint_1_position_controller/command", 10);
+    
+    // Create a publisher that can publish a std_msgs::Float64 message on the /simple_arm/joint_2_position_controller/command topic
+    ros::Publisher mJoint2Pub = mNode.advertise<std_msgs::Float64>("/simple_arm/joint_2_position_controller/command", 10);
+  }
+
+  void PublishJointAngles(std_msgs::Float64 joint1_angle, std_msgs::Float64 joint2_angle)
+  {
+    mJoint1Pub.publish(joint1_angle);
+    mJoint2Pub.publish(joint2_angle);
+  }
+
+  private:
+
+  ros::NodeHandle mNode; 
+  ros::Publisher mJoint1Pub;
+  ros::Publisher mJoint2Pub;
+
+};//End of class JointAnglesPublisher
+
+
 int main(int argc, char** argv)
 {
-     // Itinialize the arm_mover node
-     ros::init(argc, argv, "arm_mover");
+    // Itinialize the arm_mover node
+    ros::init(argc, argv, "arm_mover");
 
-    // Create a handle to the arm_mover node
-    ros::NodeHandle n;
-
-
-    // Create a publisher that can publish a std_msgs::Float64 message on the /simple_arm/joint_1_position_controller/command topic
-    ros::Publisher joint1_pub = n.advertise<std_msgs::Float64>("/simple_arm/joint_1_position_controller/command", 10);
-    // Create a publisher that can publish a std_msgs::Float64 message on the /simple_arm/    joint_2_position_controller/command topic
-    ros::Publisher joint2_pub = n.advertise<std_msgs::Float64>("/simple_arm/joint_2_position_controller/command", 10);
+    // Initialize object of JointAnglesPublisher class
+    JointAnglesPublisher jointAnglesPubObject;
 
     // Set loop frequency of 10 Hz
     ros::Rate loop_rate(10);
@@ -36,8 +58,7 @@ int main(int argc, char** argv)
         joint2_angle.data = sin(2 * M_PI * 0.1 * elapsed) * (M_PI / 2);
 
         // Publish the arm joint angles
-        joint1_pub.publish(joint1_angle);
-        joint2_pub.publish(joint2_angle);
+        jointAnglesPubObject.PublishJointAngles(joint1_angle, joint2_angle);
 
         // Sleep for the time remaining until 10 Hz is reached
         loop_rate.sleep();
