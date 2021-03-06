@@ -1,6 +1,6 @@
 [![Udacity - Robotics NanoDegree Program](https://s3-us-west-1.amazonaws.com/udacity-robotics/Extra+Images/RoboND_flag.png)](https://www.udacity.com/robotics)
 
-# RoboND-simple_arm
+# RoboticsND_SimpleArm
 A mini-project to better explain pub-sub architecture in ROS
 
 Originally clone of the branch *first_interaction* from [this](https://github.com/udacity/RoboND-simple_arm.git) repository.
@@ -49,7 +49,8 @@ Open a new terminal and type the following:
 ```sh
 $ cd /home/workspace/catkin_ws/
 $ source devel/setup.bash
-$ rosservice call /arm_mover/safe_move "joint_1: 0.0 joint_2: 0.0"
+$ rosservice call /arm_mover/safe_move "joint_1: 0.0
+joint_2: 0.0"
 ```
 
 ## How to view image stream from the camera?
