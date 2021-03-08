@@ -8,13 +8,13 @@ class JointAnglesPublisher
   JointAnglesPublisher()
   {
     // Create a publisher that can publish a std_msgs::Float64 message on the /simple_arm/joint_1_position_controller/command topic
-    ros::Publisher mJoint1Pub = mNode.advertise<std_msgs::Float64>("/simple_arm/joint_1_position_controller/command", 10);
+    mJoint1Pub = mNode.advertise<std_msgs::Float64>("/simple_arm/joint_1_position_controller/command", 10);
     
     // Create a publisher that can publish a std_msgs::Float64 message on the /simple_arm/joint_2_position_controller/command topic
-    ros::Publisher mJoint2Pub = mNode.advertise<std_msgs::Float64>("/simple_arm/joint_2_position_controller/command", 10);
+    mJoint2Pub = mNode.advertise<std_msgs::Float64>("/simple_arm/joint_2_position_controller/command", 10);
   }
 
-  void PublishJointAngles(std_msgs::Float64 joint1_angle, std_msgs::Float64 joint2_angle)
+  void PublishJointAngles(const std_msgs::Float64& joint1_angle, const std_msgs::Float64& joint2_angle)
   {
     mJoint1Pub.publish(joint1_angle);
     mJoint2Pub.publish(joint2_angle);
@@ -23,8 +23,8 @@ class JointAnglesPublisher
   private:
 
   ros::NodeHandle mNode; 
-  ros::Publisher mJoint1Pub;
-  ros::Publisher mJoint2Pub;
+  ros::Publisher  mJoint1Pub;
+  ros::Publisher  mJoint2Pub;
 
 };//End of class JointAnglesPublisher
 
@@ -41,7 +41,6 @@ int main(int argc, char** argv)
     ros::Rate loop_rate(10);
 
     int start_time, elapsed;
-
 
     // Get ROS start time
     while (not start_time) {
